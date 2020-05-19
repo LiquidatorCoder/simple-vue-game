@@ -37,16 +37,19 @@
         </section>
         <section class="row controls card" v-if="gameIsRunning">
             <div class="col s3 card-content text-center">
-                <button class="btn waves-effect waves-light red" id="attack">ATTACK</button>
+                <button class="btn waves-effect waves-light red" id="attack" v-on:click="attack">ATTACK</button>
             </div>
             <div class="col s3 card-content text-center">
-                <button class="btn waves-effect waves-light orange" id="special-attack">SPECIAL ATTACK</button>
+                <button class="btn waves-effect waves-light orange" id="special-attack"
+                    v-on:click="specialAttack">SPECIAL ATTACK</button>
             </div>
             <div class="col s3 card-content text-center">
-                <button class="btn waves-effect waves-light light-green" id="heal">HEAL</button>
+                <button class="btn waves-effect waves-light light-green" id="heal" v-bind:class="{disabled: !healsLeft}"
+                    v-on:click="heal">HEAL
+                    ({{ healsLeft }})</button>
             </div>
             <div class="col s3 card-content text-center">
-                <button class="btn waves-effect waves-light grey" id="give-up">GIVE UP</button>
+                <button class="btn waves-effect waves-light grey" id="give-up" v-on:click="giveUp">GIVE UP</button>
             </div>
         </section>
         <section class="row log card" v-if="gameIsRunning">
