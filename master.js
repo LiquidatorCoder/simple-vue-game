@@ -108,7 +108,7 @@ new Vue({
             this.turns.unshift({ isPlayer: true, text: "Player attacked Monster for " + damage })
         },
         playerSpecialAttacks: function () {
-            var damage = this.calculateDamage(5, 30)
+            var damage = this.calculateDamage(20, 30)
             new Audio("sounds/specialAttack.wav").play();
             this.monsterHealth -= damage;
             if (this.monsterHealth < 0) {
