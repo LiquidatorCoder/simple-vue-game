@@ -42,6 +42,7 @@ new Vue({
             this.playerHealth = 0;
             this.gameIsRunning = false;
             console.log("Monster Won!")
+            this.status = "Monster Won!"
         },
         getPlayerBarColor: function () {
             if (this.playerHealth < 20) {
