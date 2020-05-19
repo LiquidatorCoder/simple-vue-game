@@ -10,9 +10,46 @@
 
 <body>
     <div id="app">
-
+        <section class="row card">
+            <div class="col s6">
+                <h1 class="text-center">YOU</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                    </div>
+                </div>
+            </div>
+            <div class="col s6">
+                <h1 class="text-center">MONSTER</h1>
+                <div class="healthbar">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                    </div>
+                </div>
+            </div>btn-large
+        </section>
+        <section class="row controls card">
+            <div class="col s12 card-content text-center">
+                <button class="btn waves-effect waves-light black btn-large" id="start-game">START NEW GAME</button>
+            </div>
+        </section>
+        <section class="row controls card">
+            <div class="col s12 card-content text-center">
+                <button class="btn waves-effect waves-light red" id="attack">ATTACK</button>
+                <button class="btn waves-effect waves-light orange" id="special-attack">SPECIAL ATTACK</button>
+                <button class="btn waves-effect waves-light light-green" id="heal">HEAL</button>
+                <button class="btn waves-effect waves-light grey" id="give-up">GIVE UP</button>
+            </div>
+        </section>
+        <section class="row log card">
+            <div class="col s12 card-content text-center">
+                <ul>
+                    <li>
+                    </li>
+                </ul>
+            </div>
+        </section>
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
