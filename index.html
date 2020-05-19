@@ -14,24 +14,28 @@
             <div class="col s12 m6 card-content">
                 <h3 class="text-center">YOU</h3>
                 <div class="healthbar">
-                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;"
+                        v-bind:style="{'width': playerHealth + '%'}">
+                        {{ playerHealth }}
                     </div>
                 </div>
             </div>
             <div class="col s12 m6 card-content">
                 <h3 class="text-center">MONSTER</h3>
                 <div class="healthbar">
-                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;"
+                        v-bind:style="{'width': monsterHealth + '%'}">
+                        {{ monsterHealth }}
                     </div>
                 </div>
             </div>
         </section>
-        <section class="row controls card">
+        <section class="row controls card" v-if="!gameIsRunning" v-on:click="startGame()">
             <div class="col s12 card-content text-center">
                 <button class="btn waves-effect waves-light black btn-large" id="start-game">START NEW GAME</button>
             </div>
         </section>
-        <section class="row controls card">
+        <section class="row controls card" v-if="gameIsRunning">
             <div class="col s3 card-content text-center">
                 <button class="btn waves-effect waves-light red" id="attack">ATTACK</button>
             </div>
@@ -45,7 +49,7 @@
                 <button class="btn waves-effect waves-light grey" id="give-up">GIVE UP</button>
             </div>
         </section>
-        <section class="row log card">
+        <section class="row log card" v-if="gameIsRunning">
             <div class="col s12 card-content text-center">
                 <ul>
                     <li>
@@ -55,6 +59,7 @@
         </section>
 
     </div>
+    <script src="master.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
