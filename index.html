@@ -11,20 +11,20 @@
 <body>
     <div id="app">
         <section class="row card">
-            <div class="col s6">
-                <h1 class="text-center">YOU</h1>
+            <div class="col s12 m6 card-content">
+                <h3 class="text-center">YOU</h3>
                 <div class="healthbar">
                     <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
                     </div>
                 </div>
             </div>
-            <div class="col s6">
-                <h1 class="text-center">MONSTER</h1>
+            <div class="col s12 m6 card-content">
+                <h3 class="text-center">MONSTER</h3>
                 <div class="healthbar">
                     <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
                     </div>
                 </div>
-            </div>btn-large
+            </div>
         </section>
         <section class="row controls card">
             <div class="col s12 card-content text-center">
@@ -32,10 +32,16 @@
             </div>
         </section>
         <section class="row controls card">
-            <div class="col s12 card-content text-center">
+            <div class="col s3 card-content text-center">
                 <button class="btn waves-effect waves-light red" id="attack">ATTACK</button>
+            </div>
+            <div class="col s3 card-content text-center">
                 <button class="btn waves-effect waves-light orange" id="special-attack">SPECIAL ATTACK</button>
+            </div>
+            <div class="col s3 card-content text-center">
                 <button class="btn waves-effect waves-light light-green" id="heal">HEAL</button>
+            </div>
+            <div class="col s3 card-content text-center">
                 <button class="btn waves-effect waves-light grey" id="give-up">GIVE UP</button>
             </div>
         </section>
