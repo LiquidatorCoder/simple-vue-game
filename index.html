@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monster Slayer</title>
     <script src="https://npmcdn.com/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -14,8 +16,8 @@
             <div class="col s12 m6 card-content">
                 <h3 class="text-center">YOU</h3>
                 <div class="healthbar">
-                    <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;"
-                        v-bind:style="{'width': playerHealth + '%'}">
+                    <div class="healthbar text-center" style="background-color: red; margin: 0; color: white;"
+                        v-bind:style="{'width': playerHealth + '%','background-color': getPlayerBarColor()}">
                         {{ playerHealth }}
                     </div>
                 </div>
@@ -24,15 +26,16 @@
                 <h3 class="text-center">MONSTER</h3>
                 <div class="healthbar">
                     <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;"
-                        v-bind:style="{'width': monsterHealth + '%'}">
+                        v-bind:style="{'width': monsterHealth + '%','background-color': getMonsterBarColor()}">
                         {{ monsterHealth }}
                     </div>
                 </div>
             </div>
         </section>
-        <section class="row controls card" v-if="!gameIsRunning" v-on:click="startGame()">
+        <section class="row controls card" v-if="!gameIsRunning">
             <div class="col s12 card-content text-center">
-                <button class="btn waves-effect waves-light black btn-large" id="start-game">START NEW GAME</button>
+                <button class="btn waves-effect waves-light black btn-large" id="start-game"
+                    v-on:click="startGame()">START NEW GAME</button>
             </div>
         </section>
         <section class="row controls card" v-if="gameIsRunning">
@@ -40,8 +43,8 @@
                 <button class="btn waves-effect waves-light red" id="attack" v-on:click="attack">ATTACK</button>
             </div>
             <div class="col s3 card-content text-center">
-                <button class="btn waves-effect waves-light orange" id="special-attack"
-                    v-on:click="specialAttack">SPECIAL ATTACK</button>
+                <button class="btn waves-effect waves-light orange" id="special-attack" v-on:click="specialAttack"
+                    v-bind:class="{disabled: !sAttacksLeft}">SPECIAL ATTACK ({{ sAttacksLeft }})</button>
             </div>
             <div class="col s3 card-content text-center">
                 <button class="btn waves-effect waves-light light-green" id="heal" v-bind:class="{disabled: !healsLeft}"
