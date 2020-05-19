@@ -6,6 +6,8 @@ new Vue({
         gameIsRunning: false,
         healsLeft: 3,
         sAttacksLeft: 2,
+        turns: [],
+        status: "Clash!",
     },
     methods: {
         startGame: function () {
@@ -14,83 +16,26 @@ new Vue({
             this.monsterHealth = 100;
             this.healsLeft = 3;
             this.sAttacksLeft = 2;
+            this.turns = []
+            this.status = "Clash!"
         },
         attack: function () {
-
-            new Audio("sounds/attack.wav").play();
-            this.monsterHealth -= Math.max(Math.floor(Math.random() * 11), 3);
-            this.playerHealth -= Math.max(Math.floor(Math.random() * 15), 5);
-            if (this.playerHealth < 0) {
-                this.playerHealth = 0;
-            }
-            if (this.monsterHealth < 0) {
-                this.monsterHealth = 0;
-            }
-
-            if (this.playerHealth == 0) {
-                this.healsLeft = 0;
-                this.gameIsRunning = false;
-            }
-            else if (this.monsterHealth == 0) {
-                this.gameIsRunning = false;
-            }
-
-            if (!this.gameIsRunning) {
-                if (this.playerHealth > this.monsterHealth) {
-                    console.log("Player Won!");
-                } else if (this.playerHealth == this.monsterHealth) {
-                    console.log("Tie!");
-                } else {
-                    console.log("Monster Won!");
-                }
-            }
+            this.playerAttacks();
+            this.monsterAttacks();
+            this.checkWin();
 
         },
         specialAttack: function () {
             if (this.sAttacksLeft != 0) {
-                new Audio("sounds/specialAttack.wav").play();
-                this.monsterHealth -= Math.max(Math.floor(Math.random() * 31), 3);
-                this.playerHealth -= Math.max(Math.floor(Math.random() * 15), 5);
-                if (this.playerHealth < 0) {
-                    this.playerHealth = 0;
-                }
-                if (this.monsterHealth < 0) {
-                    this.monsterHealth = 0;
-                }
-                if (this.playerHealth == 0) {
-                    this.healsLeft = 0;
-                    this.gameIsRunning = false;
-                }
-                else if (this.monsterHealth == 0) {
-                    this.gameIsRunning = false;
-                }
-
+                this.playerSpecialAttacks();
+                this.monsterAttacks();
                 this.sAttacksLeft -= 1;
             }
+            this.checkWin();
 
-            if (!this.gameIsRunning) {
-                if (this.playerHealth > this.monsterHealth) {
-                    console.log("Player Won!");
-                } else if (this.playerHealth == this.monsterHealth) {
-                    console.log("Tie!");
-                } else {
-                    console.log("Monster Won!");
-                }
-            }
         },
         heal: function () {
-            if (this.monsterHealth == 0) {
-            }
-            else {
-                if (this.playerHealth < 100 && this.playerHealth > 0 && this.healsLeft != 0) {
-                    new Audio("sounds/heal.wav").play();
-                    this.playerHealth = this.playerHealth + Math.floor(Math.random() * 15);
-                    this.healsLeft -= 1;
-                }
-                if (this.playerHealth > 100) {
-                    this.playerHealth = 100;
-                }
-            }
+            this.playerHeals();
         },
         giveUp: function () {
             new Audio("sounds/giveUp.wav").play();
@@ -120,5 +65,70 @@ new Vue({
                 return "green";
             }
         },
+        calculateDamage: function (min, max) {
+            return Math.max(Math.floor(Math.random() * max + 1), min)
+        },
+        checkWin: function () {
+            if (this.playerHealth == 0) {
+                this.healsLeft = 0;
+                this.gameIsRunning = false;
+            }
+            else if (this.monsterHealth == 0) {
+                this.gameIsRunning = false;
+            }
+            if (!this.gameIsRunning) {
+                if (this.playerHealth > this.monsterHealth) {
+                    console.log("Player Won!");
+                    this.status = "Player Won!"
+                } else if (this.playerHealth == this.monsterHealth) {
+                    console.log("Tie!");
+                    this.status = "Tie!"
+                } else {
+                    console.log("Monster Won!");
+                    this.status = "Monster Won!"
+                }
+            }
+        },
+        monsterAttacks: function () {
+            var damage = this.calculateDamage(5, 15);
+            this.playerHealth -= damage;
+            if (this.playerHealth < 0) {
+                this.playerHealth = 0;
+            }
+            this.turns.unshift({ isPlayer: false, text: "Monster attacked Player for " + damage })
+        },
+        playerAttacks: function () {
+            var damage = this.calculateDamage(3, 10)
+            new Audio("sounds/attack.wav").play();
+            this.monsterHealth -= damage;
+            if (this.monsterHealth < 0) {
+                this.monsterHealth = 0;
+            }
+            this.turns.unshift({ isPlayer: true, text: "Player attacked Monster for " + damage })
+        },
+        playerSpecialAttacks: function () {
+            var damage = this.calculateDamage(5, 30)
+            new Audio("sounds/specialAttack.wav").play();
+            this.monsterHealth -= damage;
+            if (this.monsterHealth < 0) {
+                this.monsterHealth = 0;
+            }
+            this.turns.unshift({ isPlayer: true, text: "Player used Special Attack for " + damage })
+        },
+        playerHeals: function () {
+            if (this.monsterHealth != 0) {
+                if (this.playerHealth < 100 && this.playerHealth > 0 && this.healsLeft != 0) {
+                    var health = this.calculateDamage(5, 20);
+                    new Audio("sounds/heal.wav").play();
+                    this.playerHealth += health;
+                    this.healsLeft -= 1;
+                    this.turns.unshift({ isPlayer: true, text: "Player healed for " + health })
+
+                }
+                if (this.playerHealth > 100) {
+                    this.playerHealth = 100;
+                }
+            }
+        }
     }
 })

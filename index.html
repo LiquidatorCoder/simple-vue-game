@@ -12,6 +12,9 @@
 
 <body>
     <div id="app">
+        <section class="row card text-center">
+            <h1 class="card-content">{{ status }}</h1>
+        </section>
         <section class="row card">
             <div class="col s12 m6 card-content">
                 <h3 class="text-center">YOU</h3>
@@ -55,10 +58,12 @@
                 <button class="btn waves-effect waves-light grey" id="give-up" v-on:click="giveUp">GIVE UP</button>
             </div>
         </section>
-        <section class="row log card" v-if="gameIsRunning">
-            <div class="col s12 card-content text-center">
+        <section class="row log card" v-if="gameIsRunning && turns.length != 0">
+            <div class="col l4 s0"></div>
+            <div class="col l4 s12 card-content text-center">
                 <ul>
-                    <li>
+                    <li v-for="turn in turns" v-bind:class="{'light-green': turn.isPlayer,red: !turn.isPlayer}">
+                        {{ turn.text }}
                     </li>
                 </ul>
             </div>
